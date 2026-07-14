@@ -40,5 +40,13 @@ namespace EcommerceBackend.Services
                 _context.SaveChanges();
             }
         }
+        public IEnumerable<Order> GetOrdersByUser(int userId)
+        {
+            return _context.Orders
+                .Include(o => o.OrderItems) // if you want items included
+                .Where(o => o.UserId == userId)
+                .ToList();
+        }
+
     }
 }

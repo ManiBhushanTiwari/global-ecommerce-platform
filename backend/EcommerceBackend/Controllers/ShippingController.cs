@@ -12,14 +12,14 @@ namespace EcommerceBackend.Controllers
         public ShippingController(ShippingService service) => _service = service;
 
         [HttpGet] public IActionResult GetAll() => Ok(_service.GetAllShippings());
-        [HttpGet("{id}")] public IActionResult GetById(int id) => _service.GetShippingById(id) is Shipping s ? Ok(s) : NotFound();
+        [HttpGet("{id}")] public IActionResult GetById(int id) => _service.GetShippingByOrderId(id) is Shipping s ? Ok(s) : NotFound();
         [HttpPost] public IActionResult Create(Shipping shipping) { _service.AddShipping(shipping); return CreatedAtAction(nameof(GetById), new { id = shipping.Id }, shipping); }
         [HttpPut("{id}")] public IActionResult Update(int id, Shipping shipping) { if (id != shipping.Id) return BadRequest(); _service.UpdateShipping(shipping); return NoContent(); }
         [HttpDelete("{id}")] public IActionResult Delete(int id) { _service.DeleteShipping(id); return NoContent(); }
         [HttpGet("tracking/{orderId}")]
         public IActionResult GetTracking(int orderId)
         {
-            var shipping = _service.GetShippingById(orderId);
+            var shipping = _service.GetShippingByOrderId(orderId);
             if (shipping == null)
                 return NotFound(new { message = "No tracking info found" });
 
@@ -31,6 +31,7 @@ namespace EcommerceBackend.Controllers
                 status = shipping.Status
             });
         }
+
 
     }
 }

@@ -142,15 +142,15 @@
   },
   {
     "ContainingType": "EcommerceBackend.Controllers.OrdersController",
-    "Method": "CreateMultiple",
-    "RelativePath": "api/Orders/create-multiple",
-    "HttpMethod": "POST",
+    "Method": "GetByUser",
+    "RelativePath": "api/Orders/user/{userId}",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "orderDtos",
-        "Type": "System.Collections.Generic.List\u00601[[EcommerceBackend.Models.OrderDto, EcommerceBackend, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Name": "userId",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],

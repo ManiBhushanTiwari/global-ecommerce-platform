@@ -20,7 +20,11 @@ namespace EcommerceBackend.Services
         }
 
         public IEnumerable<Shipping> GetAllShippings() => _context.Shippings.ToList();
-        public Shipping? GetShippingById(int id) => _context.Shippings.Find(id);
+        public Shipping? GetShippingByOrderId(int orderId)
+        {
+            return _context.Shippings.SingleOrDefault(s => s.OrderId == orderId);
+        }
+
 
         public void AddShipping(Shipping shipping)
         {

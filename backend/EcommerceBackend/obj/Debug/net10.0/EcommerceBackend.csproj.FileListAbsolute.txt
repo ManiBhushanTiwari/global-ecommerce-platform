@@ -166,3 +166,4 @@ C:\Users\manit\source\repos\global-ecommerce-platform\backend\EcommerceBackend\o
 C:\Users\manit\source\repos\global-ecommerce-platform\backend\EcommerceBackend\obj\Debug\net10.0\EcommerceBackend.pdb
 C:\Users\manit\source\repos\global-ecommerce-platform\backend\EcommerceBackend\obj\Debug\net10.0\EcommerceBackend.genruntimeconfig.cache
 C:\Users\manit\source\repos\global-ecommerce-platform\backend\EcommerceBackend\obj\Debug\net10.0\ref\EcommerceBackend.dll
+C:\Users\manit\source\repos\global-ecommerce-platform\backend\EcommerceBackend\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

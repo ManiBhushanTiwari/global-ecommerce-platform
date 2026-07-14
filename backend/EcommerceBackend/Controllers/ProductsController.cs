@@ -1,5 +1,6 @@
 ﻿using EcommerceBackend.Models;
 using EcommerceBackend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceBackend.Controllers
@@ -25,6 +26,7 @@ namespace EcommerceBackend.Controllers
             return product == null ? NotFound() : Ok(product);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Create(Product product)
         {

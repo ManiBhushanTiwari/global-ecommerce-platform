@@ -1,5 +1,6 @@
 ﻿using EcommerceBackend.Models;
 using EcommerceBackend.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using System.Text;
 
 namespace EcommerceBackend.Controllers
 {
+    //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
