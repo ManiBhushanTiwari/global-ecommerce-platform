@@ -1,0 +1,22 @@
+# Angular / Node frontend
+dist/
+node_modules/
+.angular/cache
+.vscode/
+npm-debug.log
+yarn-error.log
+
+# .NET / Visual Studio backend
+.vs/
+bin/
+obj/
+Debug/
+Release/
+*.dll
+*.exe
+*.pdb
+*.log
+*.cache
+*.user
+*.suo
+*.vsidx

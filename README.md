@@ -21,5 +21,5 @@ dotnet run
 ## Frontend
 cd frontend
 npm ci
-ng serve
+ng serve --o
 # Runs at http://localhost:4200
