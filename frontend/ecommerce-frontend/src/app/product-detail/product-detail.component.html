@@ -1,0 +1,12 @@
+<div *ngIf="product" class="card shadow-sm">
+  <div class="card-body">
+    <h3 class="card-title">{{ product.name }}</h3>
+    <p class="card-text"><strong>Category:</strong> {{ product.category }}</p>
+    <p class="card-text"><strong>Price:</strong> {{ product.price | currency }}</p>
+    <p class="card-text"><strong>Stock:</strong> {{ product.stock }}</p>
+    <p class="card-text"><strong>Description:</strong> {{ product.description }}</p>
+    <button class="btn btn-primary w-100" (click)="addToCart(product)">
+      Add to Cart
+    </button>
+  </div>
+</div>

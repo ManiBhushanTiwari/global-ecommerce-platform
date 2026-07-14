@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-md-6">
+    <h4>Orders Per Day</h4>
+    <ngx-charts-line-chart
+      *ngIf="ordersPerDay?.length"
+      [view]="[400,300]"
+      [results]="ordersPerDay"
+      [legend]="false"
+      [xAxis]="true"
+      [yAxis]="true"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      xAxisLabel="Date"
+      yAxisLabel="Orders">
+    </ngx-charts-line-chart>
+  </div>
+
+  <div class="col-md-6">
+    <h4>Conversion Rate</h4>
+    <ngx-charts-bar-vertical
+      *ngIf="conversionRates?.length"
+      [view]="[400,300]"
+      [results]="conversionRates"
+      [legend]="false"
+      [xAxis]="true"
+      [yAxis]="true"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      xAxisLabel="Metric"
+      yAxisLabel="Rate (%)">
+    </ngx-charts-bar-vertical>
+  </div>
+</div>
+
+
+<div class="row mt-4">
+  <div class="col-md-12">
+    <h4>Failed Payments</h4>
+    <div class="card p-3 shadow-sm">
+      <h5>Total Failed Payments: {{ failedPayments }}</h5>
+    </div>
+  </div>
+</div>

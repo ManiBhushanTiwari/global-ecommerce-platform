@@ -1,0 +1,26 @@
+<div class="container mt-4">
+  <h2>Add Product</h2>
+  <form (ngSubmit)="addProduct()">
+    <div class="mb-3">
+      <label>Name</label>
+      <input [(ngModel)]="product.name" name="name" class="form-control" required />
+    </div>
+    <div class="mb-3">
+      <label>Category</label>
+      <input [(ngModel)]="product.category" name="category" class="form-control" required />
+    </div>
+    <div class="mb-3">
+      <label>Price</label>
+      <input [(ngModel)]="product.price" name="price" type="number" class="form-control" required />
+    </div>
+    <div class="mb-3">
+      <label>Stock</label>
+      <input [(ngModel)]="product.stock" name="stock" type="number" class="form-control" required />
+    </div>
+    <div class="mb-3">
+      <label>Description</label>
+      <textarea [(ngModel)]="product.description" name="description" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Product</button>
+  </form>
+</div>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EcommerceBackend</name>
+    </assembly>
+    <members>
+        <member name="T:EcommerceBackend.Migrations.Baseline">
+            <inheritdoc />
+        </member>
+        <member name="M:EcommerceBackend.Migrations.Baseline.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:EcommerceBackend.Migrations.Baseline.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:EcommerceBackend.Migrations.Baseline.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Program">
+            <summary>
+            Auto-generated public partial Program class for top-level statement apps.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,24 @@
+<div class="container mt-4">
+  <h2>Order History</h2>
+  <ul class="list-group">
+    <li *ngFor="let order of orders" class="list-group-item">
+      <div>
+        <strong>Order #{{ order.id }}</strong> - {{ order.status }} - {{ order.totalAmount | currency }}
+      </div>
+      <div class="mt-2">
+        <!-- Dynamic Order Status -->
+        <a class="btn btn-sm btn-primary me-2"
+           [routerLink]="['/order-status']"
+           [queryParams]="{ orderId: order.id }">
+          View Status
+        </a>
+
+        <!-- Dynamic Order Tracking -->
+        <a class="btn btn-sm btn-secondary"
+           [routerLink]="['/order-tracking', order.id]">
+          Track Order
+        </a>
+      </div>
+    </li>
+  </ul>
+</div>

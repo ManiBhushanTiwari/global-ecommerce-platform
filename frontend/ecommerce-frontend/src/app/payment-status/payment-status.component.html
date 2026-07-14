@@ -1,0 +1,10 @@
+<div class="container mt-4" *ngIf="trackingInfo; else noTracking">
+  <h2>Order Tracking</h2>
+  <p>Carrier: {{ trackingInfo.carrier }}</p>
+  <p>Tracking #: {{ trackingInfo.trackingNumber }}</p>
+  <p>Status: {{ trackingInfo.status }}</p>
+</div>
+
+<ng-template #noTracking>
+  <p>No tracking information available.</p>
+</ng-template>

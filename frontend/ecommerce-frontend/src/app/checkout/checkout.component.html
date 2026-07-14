@@ -1,0 +1,28 @@
+<div class="container mt-4">
+  <h2>Checkout</h2>
+
+  <form (ngSubmit)="placeOrder()" #checkoutForm="ngForm">
+    <div class="mb-3">
+      <label>Name</label>
+      <input [(ngModel)]="customer.name" name="name" class="form-control" required />
+    </div>
+    <div class="mb-3">
+      <label>Email</label>
+      <input [(ngModel)]="customer.email" name="email" class="form-control" required />
+    </div>
+    <div class="mb-3">
+      <label>Address</label>
+      <textarea [(ngModel)]="customer.address" name="address" class="form-control" required></textarea>
+    </div>
+
+    <h4>Order Summary</h4>
+    <ul class="list-group mb-3">
+      <li *ngFor="let item of items" class="list-group-item">
+        {{ item.name }} - {{ item.price | currency }}
+      </li>
+    </ul>
+    <h5>Total: {{ total | currency }}</h5>
+
+    <button class="btn btn-success w-100 mt-3" type="submit">Place Order</button>
+  </form>
+</div>

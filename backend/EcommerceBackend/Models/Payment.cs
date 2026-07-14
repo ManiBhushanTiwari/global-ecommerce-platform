@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace EcommerceBackend.Models;
+
+public partial class Payment
+{
+    public int Id { get; set; }
+
+    public int OrderId { get; set; }
+
+    public decimal Amount { get; set; }
+
+    public string Status { get; set; } = null!;
+
+    public DateTime PaymentDate { get; set; }
+
+
+    public string? ExternalOrderId { get; set; }
+   
+    public string? Provider { get; set; }
+    
+    public DateTime? CreatedAt { get; set; }
+}
