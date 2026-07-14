@@ -38,4 +38,5 @@ export class CartComponent implements OnInit {
   getQuantity(productId: number): number {
     return this.cartService.getQuantity(productId);
   }
+  
 }

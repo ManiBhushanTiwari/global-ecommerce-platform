@@ -14,17 +14,38 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   email: string = '';
   password: string = '';
+  loading: boolean = false;
+  errorMessage: string = '';
+  successMessage: string = '';
 
   constructor(private authService: AuthService, private router: Router) {}
 
   login() {
+    this.loading = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+
     this.authService.login({ email: this.email, password: this.password }).subscribe({
       next: res => {
         this.authService.saveToken(res.token);
-        this.authService.saveUserId(res.userId); 
-        this.router.navigate(['/']);
+        this.authService.saveUserId(res.userId);
+
+        this.loading = false;
+        this.successMessage = 'Login successful 🎉 Redirecting...';
+
+        // Redirect after short delay so user sees the message
+        setTimeout(() => {
+          this.router.navigate(['/products']); // or /cart, /dashboard
+        }, 1500);
       },
-      error: () => alert('Login failed')
+      error: () => {
+        this.loading = false;
+        this.errorMessage = 'Invalid email or password';
+      }
     });
   }
+  //  logout() {
+  //   this.authService.logout();
+  //   this.router.navigate(['/login']); // ✅ redirect to login page
+  // }
 }

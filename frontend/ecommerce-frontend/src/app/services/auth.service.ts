@@ -44,9 +44,24 @@ export class AuthService {
     return 0;
   }
 
-  isAuthenticated(): boolean {
-    return !!this.getToken();
+ isAuthenticated(): boolean {
+  const token = this.getToken();
+  if (!token) return false;
+
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const isExpired = Date.now() >= payload.exp * 1000;
+    if (isExpired) {
+      this.logout(); // clear expired token
+      return false;
+    }
+    return true;
+  } catch {
+    this.logout(); // clear invalid token
+    return false;
   }
+}
+
 
   logout() {
     if (isPlatformBrowser(this.platformId)) {
@@ -54,4 +69,10 @@ export class AuthService {
       localStorage.removeItem(this.userIdKey);
     }
   }
+ isLoggedIn(): boolean {
+  return !!localStorage.getItem(this.tokenKey); // use jwtToken consistently
+}
+
+
+
 }

@@ -1,10 +1,27 @@
-<div class="container mt-4" *ngIf="trackingInfo; else noTracking">
-  <h2>Order Tracking</h2>
-  <p>Carrier: {{ trackingInfo.carrier }}</p>
-  <p>Tracking #: {{ trackingInfo.trackingNumber }}</p>
-  <p>Status: {{ trackingInfo.status }}</p>
-</div>
-
-<ng-template #noTracking>
-  <p>No tracking information available.</p>
-</ng-template>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Tracking</title>
+  <style>
+    .container {
+      margin-top: 20px;
+      font-family: Arial, sans-serif;
+    }
+    h2 {
+      margin-bottom: 10px;
+    }
+    p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Order Tracking</h2>
+    <p>Carrier: FedEx</p>
+    <p>Tracking #: 123456789</p>
+    <p>Status: In Transit</p>
+  </div>
+</body>
+</html>
