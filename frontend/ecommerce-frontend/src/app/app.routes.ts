@@ -24,7 +24,7 @@ export const routes: Routes = [
 
   // Public routes
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
-  { path: 'products', component: ProductListComponent },
+  { path: 'products', component: ProductListComponent},
   { path: 'product/:id', component: ProductDetailComponent },
 
   // Protected routes

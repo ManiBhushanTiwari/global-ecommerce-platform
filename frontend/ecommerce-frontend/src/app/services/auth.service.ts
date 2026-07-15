@@ -19,60 +19,56 @@ export class AuthService {
 
   saveToken(token: string) {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem(this.tokenKey, token);
+      sessionStorage.setItem(this.tokenKey, token);   // ✅ sessionStorage
     }
   }
 
   saveUserId(userId: number) {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem(this.userIdKey, userId.toString());
+      sessionStorage.setItem(this.userIdKey, userId.toString());  // ✅ sessionStorage
     }
   }
 
   getToken(): string | null {
     if (isPlatformBrowser(this.platformId)) {
-      return localStorage.getItem(this.tokenKey);
+      return sessionStorage.getItem(this.tokenKey);   // ✅ sessionStorage
     }
     return null;
   }
 
   getUserId(): number {
     if (isPlatformBrowser(this.platformId)) {
-      const stored = localStorage.getItem(this.userIdKey);
+      const stored = sessionStorage.getItem(this.userIdKey);      // ✅ sessionStorage
       return stored ? parseInt(stored, 10) : 0;
     }
     return 0;
   }
 
- isAuthenticated(): boolean {
-  const token = this.getToken();
-  if (!token) return false;
-
-  try {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    const isExpired = Date.now() >= payload.exp * 1000;
-    if (isExpired) {
-      this.logout(); // clear expired token
+  isAuthenticated(): boolean {
+    const token = this.getToken();
+    if (!token) return false;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const isExpired = Date.now() >= payload.exp * 1000;
+      if (isExpired) {
+        this.logout(); // clear expired token
+        return false;
+      }
+      return true;
+    } catch {
+      this.logout(); // clear invalid token
       return false;
     }
-    return true;
-  } catch {
-    this.logout(); // clear invalid token
-    return false;
   }
-}
-
 
   logout() {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.removeItem(this.tokenKey);
-      localStorage.removeItem(this.userIdKey);
+      sessionStorage.removeItem(this.tokenKey);   // ✅ sessionStorage
+      sessionStorage.removeItem(this.userIdKey);  // ✅ sessionStorage
     }
   }
- isLoggedIn(): boolean {
-  return !!localStorage.getItem(this.tokenKey); // use jwtToken consistently
-}
 
-
-
+  isLoggedIn(): boolean {
+    return !!sessionStorage.getItem(this.tokenKey);  // ✅ sessionStorage
+  }
 }

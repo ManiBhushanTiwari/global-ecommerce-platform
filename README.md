@@ -23,3 +23,11 @@ cd frontend
 npm ci
 ng serve --o
 # Runs at http://localhost:4200
+  
+##  Test Credentials
+Use the following credentials to log in for testing:
+
+- **Email:** `test@example.com`  
+- **Password:** `Password123`
+
+

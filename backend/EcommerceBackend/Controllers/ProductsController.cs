@@ -26,7 +26,7 @@ namespace EcommerceBackend.Controllers
             return product == null ? NotFound() : Ok(product);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Create(Product product)
         {
