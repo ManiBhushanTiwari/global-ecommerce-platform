@@ -30,4 +30,8 @@ Use the following credentials to log in for testing:
 - **Email:** `test@example.com`  
 - **Password:** `Password123`
 
+## 📖 Documentation
+- [EcommercePlatformDesign.md](./EcommercePlatformDesign.md) → High-level architecture, database schema, microservice boundaries, scaling, and security considerations.
+
+
 
