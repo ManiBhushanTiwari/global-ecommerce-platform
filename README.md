@@ -19,7 +19,7 @@ dotnet run
 # Runs at http://localhost:5071
 
 ## Frontend
-cd frontend
+cd frontend/ecommerce-frontend
 npm ci
 ng serve --o
 # Runs at http://localhost:4200
