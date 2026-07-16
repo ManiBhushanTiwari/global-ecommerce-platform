@@ -15,6 +15,7 @@ ng serve
 ## Backend
 cd backend/EcommerceBackend
 dotnet restore
+dotnet ef database update
 dotnet run
 # Runs at http://localhost:5071
 

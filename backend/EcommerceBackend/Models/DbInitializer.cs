@@ -9,14 +9,26 @@ public static class DbInitializer
         // Ensure database is created
         context.Database.EnsureCreated();
 
-        // ✅ Users
         if (!context.Users.Any())
         {
-            context.Users.AddRange(
-                new User { Username = "Admin", Email = "admin@example.com", PasswordHash = "Admin123", Address = "HQ Address", CreatedAt = DateTime.Now },
-                new User { Username = "TestUser", Email = "test@example.com", PasswordHash = "Password123", Address = "Noida, India", CreatedAt = DateTime.Now }
-            );
-            context.SaveChanges();
+            if (!context.Users.Any())
+            {
+                using (var sha256 = SHA256.Create())
+                {
+                    string HashPassword(string password)
+                    {
+                        return Convert.ToBase64String(
+                            sha256.ComputeHash(Encoding.UTF8.GetBytes(password))
+                        );
+                    }
+
+                    context.Users.AddRange(
+                        new User { Username = "Admin", Email = "admin@example.com", PasswordHash = HashPassword("Admin123"), Address = "HQ Address", CreatedAt = DateTime.Now },
+                        new User { Username = "TestUser", Email = "test@example.com", PasswordHash = HashPassword("Password123"), Address = "Noida, India", CreatedAt = DateTime.Now }
+                    );
+                    context.SaveChanges();
+                }
+            }
         }
 
         // ✅ Products
