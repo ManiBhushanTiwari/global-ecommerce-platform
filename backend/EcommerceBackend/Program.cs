@@ -85,8 +85,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors("AllowAngularApp");
-app.UseAuthentication();
-app.UseAuthorization();
+if (!builder.Configuration.GetValue<bool>("DemoMode"))
+{
+    app.UseAuthentication();
+    app.UseAuthorization();
+}
+
 app.UseIpRateLimiting();
 app.UseWebSockets();
 

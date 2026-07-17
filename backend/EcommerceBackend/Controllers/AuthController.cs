@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -17,11 +20,19 @@ namespace EcommerceBackend.Controllers
         private readonly TokenService _tokenService;
         private readonly ShopDbContext _context; // your EF Core DbContext
 
-        public AuthController(TokenService tokenService, ShopDbContext context)
+        private readonly IConfiguration _configuration;
+
+        public AuthController(ShopDbContext context, IConfiguration configuration)
         {
-            _tokenService = tokenService;
             _context = context;
+            _configuration = configuration;
         }
+
+        //public AuthController(TokenService tokenService, ShopDbContext context)
+        //{
+        //    _tokenService = tokenService;
+        //    _context = context;
+        //}
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
@@ -54,24 +65,54 @@ namespace EcommerceBackend.Controllers
 
 
 
+        //[HttpPost("login")]
+        //public IActionResult Login([FromBody] LoginDto loginDto)
+        //{
+        //    // Validate user against DB
+        //    var user = _context.Users.SingleOrDefault(u => u.Email == loginDto.Email);
+        //    if (user == null)
+        //        return Unauthorized("Invalid credentials");
+
+        //    // Verify password hash (basic comparison - in production use proper hashing like BCrypt)
+        //    if (!VerifyPassword(loginDto.Password, user.PasswordHash))
+        //        return Unauthorized("Invalid credentials");
+
+        //    // Generate JWT
+        //    var token = _tokenService.GenerateToken(user);
+
+        //    // Return token + userId
+        //    return Ok(new { token, userId = user.Id });
+        //}
+
+
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginDto loginDto)
         {
-            // Validate user against DB
-            var user = _context.Users.SingleOrDefault(u => u.Email == loginDto.Email);
-            if (user == null)
-                return Unauthorized("Invalid credentials");
+            if (_configuration.GetValue<bool>("DemoMode"))
+            {
+                // Always return a valid user, no matter what was entered
+                var demoUser = _context.Users.FirstOrDefault()
+                               ?? new User { Username = "Demo", Email = "demo@example.com" };
 
-            // Verify password hash (basic comparison - in production use proper hashing like BCrypt)
-            if (!VerifyPassword(loginDto.Password, user.PasswordHash))
-                return Unauthorized("Invalid credentials");
+                return Ok(new { Token = GenerateJwtToken(demoUser), User = demoUser });
+            }
 
-            // Generate JWT
-            var token = _tokenService.GenerateToken(user);
+            // Normal login flow (hash + compare)
+            using (var sha256 = SHA256.Create())
+            {
+                string hashedInput = Convert.ToBase64String(
+                    sha256.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password))
+                );
 
-            // Return token + userId
-            return Ok(new { token, userId = user.Id });
+                var user = _context.Users
+                    .FirstOrDefault(u => u.Email == loginDto.Email && u.PasswordHash == hashedInput);
+
+                if (user == null) return Unauthorized("Invalid credentials");
+
+                return Ok(new { Token = GenerateJwtToken(user), User = user });
+            }
         }
+
 
         //private bool VerifyPassword(string password, string hash)
         //{
@@ -93,6 +134,35 @@ namespace EcommerceBackend.Controllers
                 );
                 return hashedPassword == hash;
             }
+        }
+
+        private string GenerateJwtToken(User user)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
+
+            var claims = new[]
+            {
+        new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        new Claim("username", user.Username),
+        new Claim("email", user.Email)
+    };
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.UtcNow.AddHours(1),
+                Issuer = _configuration["Jwt:Issuer"],
+                Audience = _configuration["Jwt:Audience"],
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature
+                )
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
         }
 
 

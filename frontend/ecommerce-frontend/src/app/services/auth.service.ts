@@ -23,11 +23,16 @@ export class AuthService {
     }
   }
 
-  saveUserId(userId: number) {
-    if (isPlatformBrowser(this.platformId)) {
-      sessionStorage.setItem(this.userIdKey, userId.toString());  // ✅ sessionStorage
-    }
+  // saveUserId(userId: number) {
+  //   if (isPlatformBrowser(this.platformId)) {
+  //     sessionStorage.setItem(this.userIdKey, userId.toString());  // ✅ sessionStorage
+  //   }
+  // }
+saveUserId(userId?: number) {
+  if (userId !== undefined && userId !== null) {
+    localStorage.setItem('userId', userId.toString());
   }
+}
 
   getToken(): string | null {
     if (isPlatformBrowser(this.platformId)) {
